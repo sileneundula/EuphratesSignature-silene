@@ -23,9 +23,16 @@ In BLAKE2, construction of the hash function is done like the following:
 
 ### BLAKE2B
 
+#### Params
+
 **Bits in words:** `w = 64`
+
 **Rounds:** `r = 12`
+
 **Block Bytes:** `bb = 128`
+
 **Hash Bytes:** `1 <= nn <= 64`
+
 **Key Bytes:** `0 <= kk <= 64`
+
 **Input Bytes:** `0 <= ll <= 2^128`
