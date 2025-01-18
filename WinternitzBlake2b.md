@@ -17,6 +17,15 @@ In `BLAKE2`, as specified in [RFC7693](https://datatracker.ietf.org/doc/html/rfc
 2. **Keyed-Hashing:** BLAKE2 allows for key hashing which allows the input of a key to be applied to the hash function, resulting in a different hash digest.
 3. **Fast Hashing:** BLAKE2 offers faster hashing than most cryptographic hash functions while still providing robust security.
 4. **[Security] Immunity To Length Extension Attacks:** BLAKE2 is said to be immune to **length-extension attacks** unlike SHA2.
-5. **Optimized For Different Systems**: BLAKE2b is optimized for 64-bit systems while BLAKE2s is optimized for 32-bit systems.
+5. **Optimized For Different Systems**: BLAKE2b is optimized for 64-bit systems while BLAKE2s is optimized for 8 to 32-bit systems.
 
-In BLAKE2, 
+In BLAKE2, construction of the hash function is done like the following:
+
+### BLAKE2B
+
+**Bits in words:** `w = 64`
+**Rounds:** `r = 12`
+**Block Bytes:** `bb = 128`
+**Hash Bytes:** `1 <= nn <= 64`
+**Key Bytes:** `0 <= kk <= 64`
+**Input Bytes:** `0 <= ll <= 2^128`
