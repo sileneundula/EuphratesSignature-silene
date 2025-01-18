@@ -36,3 +36,34 @@ In BLAKE2, construction of the hash function is done like the following:
 **Key Bytes:** `0 <= kk <= 64`
 
 **Input Bytes:** `0 <= ll <= 2^128`
+
+## 2. Naive Construction of WOTSVARLEN
+
+This is a naive construction of WOTSVARLEN using BLAKE2.
+
+### Assumptions
+
+We assume we are signing a message of 256-bits (32-bytes).
+
+We assume we are using the `w` parameter of `16`, signing 4 bits at a time (0-15).
+
+We assume we are using BLAKE2B with variable digest length from 32-48.
+
+### Worst Method: Mapping Method For Short Secret Key Length
+
+1. We generate 4 secret keys and one `nonce`
+2. We take sk = BLAKE2B(var_digest,key) for a total of 64 keys each being 32-48 bytes in length from the same input. Each key is labeled by its length.
+3. Each key is hashed by BLAKE2B(32) as the public key. This means there are 64 public keys.
+4. To sign a message, we take the given length of the 4 bits (0-15) and hash it for the digest length using a key for each that is derived from the `nonce xor position(i)`.
+5. Our signature is then, `sk`
+
+### Construction
+
+1. We generate 64 secret keys for a 256-bit message from randomness and hash them once using `BLAKE2B(32)`. This is our `sk`.
+2. We generate the public key using 1x each `sk`
+3. We sign a message by using a hash digest of {32-48} for the number of bits to be signed.
+
+### Mapping Technique
+
+1. We generate 64 secret keys for a 256-bit message
+2. We map out the keys, creating a BLAKE2B(
