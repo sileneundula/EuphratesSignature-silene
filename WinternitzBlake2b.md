@@ -11,8 +11,12 @@ We present many findings on Hash-Based Signature Schemes that will be presented 
 
 ## 1. Introduction To BLAKE2 (one of the NIST's SHA3 Finalists)
 
-In `BLAKE2`, there exists many properties that are **valuable** in the construction provided. These are:
+In `BLAKE2`, as specified in [RFC7693](https://datatracker.ietf.org/doc/html/rfc7693) there exists many properties that are **valuable** in the construction provided. These are:
 
 1. **Variable-Digest Hash Lengths:** (1-64 Bytes for BLAKE2b; 1-32 bytes for BLAKE2s). These are unique per each input depending on the variable size of the output.
 2. **Keyed-Hashing:** BLAKE2 allows for key hashing which allows the input of a key to be applied to the hash function, resulting in a different hash digest.
 3. **Fast Hashing:** BLAKE2 offers faster hashing than most cryptographic hash functions while still providing robust security.
+4. **[Security] Immunity To Length Extension Attacks:** BLAKE2 is said to be immune to **length-extension attacks** unlike SHA2.
+5. **Optimized For Different Systems**: BLAKE2b is optimized for 64-bit systems while BLAKE2s is optimized for 32-bit systems.
+
+In BLAKE2, 
