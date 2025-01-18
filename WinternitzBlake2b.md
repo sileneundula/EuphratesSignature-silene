@@ -57,13 +57,31 @@ We assume we are using BLAKE2B with variable digest length from 32-48.
 4. To sign a message, we take the given length of the 4 bits (0-15) and hash it for the digest length using a key for each that is derived from the `nonce xor position(i)`.
 5. Our signature is then, `sk`
 
-### Construction
+### Method 1: WOTS-ESSKI (Even Shorter Signatures K-Inverse)
 
-1. We generate 64 secret keys for a 256-bit message from randomness and hash them once using `BLAKE2B(32)`. This is our `sk`.
-2. We generate the public key using 1x each `sk`
-3. We sign a message by using a hash digest of {32-48} for the number of bits to be signed.
+1. We generate a `nonce`.
+2. We generate a `secret key` of 32-64 bytes using randomness.
+3. We use `BLAKE2B(32-48)` to iterately hash the `secret key` keyed by `iterator xor nonce` to map out our hashes
+4. We then hash each key by `message_size_in_bytes / 4` which for a 256-bit message would be `64x` with BLAKE2B(variable_digest) to get the `public key`. If needed, this number can be reduced but will not be provably enough for that many iterations if the message is 32-bytes (256-bits)
+5. To sign, we take the bit-length, and then use the key in order to iterate over each byte using the given hash digest size (n-1) for each byte. So to hash, we would hash until reduction of 1 from the public key until we get as many as we can. This is more secure than using other methods as only a little amount of the key is shown.
 
-### Mapping Technique
+#### Advantages
+- Post-Quantum One-Time Signature
+- Small Secret Key Size (only requiring a `secret key` and `nonce`)
+- Small Signature Size
+- Small Public Key Size
+- Stronger Security Assumptions
+- Can reconstruct from secret key and nonce at anytime
 
-1. We generate 64 secret keys for a 256-bit message
-2. We map out the keys, creating a BLAKE2B(
+#### Advanced Notes
+- Nonce that helps secure the secret key from collisions by using keyed-hashing with an iterator. This design can be improved on.
+- Only generating a `secret key` and `nonce` required
+- Using BLAKE2
+- 16 keys derived for 256-bit message (which can be derived from `secret key` and `nonce`)
+- Provable Secure by hashing one less than the public key for each byte.
+- Signature Size is quite small being that they only contain 16 keys.
+
+## TODO:
+
+- Look into more advanced key hashing methods.
+- More advanced algorithm for iterating over the secret.
