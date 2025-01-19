@@ -64,6 +64,7 @@ We assume we are using BLAKE2B with variable digest length from 32-48.
 - Small, Constant Public Key Size
 - Stronger Security Assumptions
 - Can reconstruct from secret key and nonce at anytime
+- Potential Support For Signing more than once (Stateful Signing since its n-1; can increase the size to allow more signing based on randomness of signatures)
 
 #### Key Size
 
