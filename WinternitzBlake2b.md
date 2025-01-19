@@ -71,10 +71,13 @@ We assume we are using BLAKE2B with variable digest length from 32-48.
 For a given digest message of 256-bits, we would have the following:
 
 **SecretKey:** 32-64 bytes (can be reconstructed from this at any time)
+
 **PublicKey:** Constant 16x keypairs hashed by variable length of `iter_hash = message_size_in_bits / 4` for full coverage from key_len (32-48).
+
 **Signature:** 64x Keys of variable length for 256-bit length
 
 **Verification-Time:** Much Longer But With Better Security Assumptions
+
 **Signing:** Standard
 
 #### Security Assumption
